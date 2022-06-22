@@ -1,0 +1,30 @@
+<div class="register_container"
+     *ngIf="switchToCode; else codeInsert"
+     [formGroup]="registerForm">
+  <input class="input" type="text" formControlName="email"/>
+  <span class="error" *ngIf="!registerForm.controls['email'].valid && registerForm.controls['email'].touched">Email введен не верно!</span>
+  <input class="input" type="password" formControlName="password"/>
+  <span class="error" *ngIf="!registerForm.controls['password'].valid && registerForm.controls['password'].touched">
+      Минимальная длинна для пароля 6 символов
+      Максимальная длинна для пароля 20 символов
+      Доступные символы: a-z,A-Z,0-9
+    </span>
+  <input class="input" type="password" formControlName="secondPassword"/>
+  <span class="error" *ngIf="registerForm.getError('notMatch') && registerForm.controls['secondPassword'].touched">
+      Пароли должны совпадать!
+    </span>
+  <button class="register_button" (click)="submitForm()">Зарегистрироваться</button>
+</div>
+
+<ng-template #codeInsert>
+  <div class="accept_container">
+    На {{displayEmail}} отправлено письмо с кодом! Ввведите его ниже для входа!
+    <div class="code_container">
+      <input type="number" min="0" max="9" (change)="numberChange($event)"/>
+      <input type="number" min="0" max="9" (change)="numberChange($event)"/>
+      <input type="number" min="0" max="9" (change)="numberChange($event)"/>
+      <input type="number" min="0" max="9" (change)="numberChange($event)"/>
+    </div>
+    <button class="register_button" (click)="submitCode()">Проверить код!</button>
+  </div>
+</ng-template>
